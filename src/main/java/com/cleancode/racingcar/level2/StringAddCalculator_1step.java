@@ -1,5 +1,6 @@
 package com.cleancode.racingcar.level2;
 
+//기능1만 일단 구현
 public class StringAddCalculator_1step {
 
     public static int splitAndSum(String text) {

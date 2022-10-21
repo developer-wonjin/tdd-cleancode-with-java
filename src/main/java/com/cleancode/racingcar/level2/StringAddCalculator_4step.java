@@ -17,20 +17,11 @@ public class StringAddCalculator_4step {
         if (m.find()) {
             String customDelimiter = m.group(1);
             String[] values = m.group(2).split(customDelimiter);    //코드 중복
-            return sum(toInts(values));
+            return sum(toIntArray(values));
         }
         String[] values = text.split(DEFAULT_DELIMITER);            //코드 중복
-        return sum(toInts(values));
+        return sum(toIntArray(values));
     }
-
-    private static int[] toInts(String[] values) {
-        int[] numbers = new int[values.length];
-        for (int i = 0; i < values.length; i++) {
-            numbers[i] = toInt(values[i]);
-        }
-        return numbers;
-    }
-
     private static int sum(int[] numbers) {
         int sum = 0;
         for (int number : numbers) {
@@ -38,6 +29,15 @@ public class StringAddCalculator_4step {
         }
         return sum;
     }
+
+    private static int[] toIntArray(String[] values) {
+        int[] numbers = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+            numbers[i] = toInt(values[i]);
+        }
+        return numbers;
+    }
+
 
     private static int toInt(String value) {
         int number = Integer.parseInt(value);

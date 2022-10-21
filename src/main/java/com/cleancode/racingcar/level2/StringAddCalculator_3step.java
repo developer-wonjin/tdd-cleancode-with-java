@@ -16,10 +16,10 @@ public class StringAddCalculator_3step {
         Matcher m = Pattern.compile(CUSTOM_DELIMETER).matcher(text);
         if (m.find()) {
             String customDelimiter = m.group(1);
-            String[] values = m.group(2).split(customDelimiter);
+            String[] values = m.group(2).split(customDelimiter); //중복코드
             return sum(values);
         }
-        String[] values = text.split(DEFAULT_DELIMITER);
+        String[] values = text.split(DEFAULT_DELIMITER);         //중복코드
         return sum(values);
     }
 
@@ -27,7 +27,7 @@ public class StringAddCalculator_3step {
     private static int sum(String[] values) { //int[] 타입의 파라미터에 대해서 사용할 수 없다.
         int sum = 0;
         for (String value : values) {
-            int number = toInt(value); // 덧셈과 변화작업 두가지를 하고있다.
+            int number = toInt(value);        // 덧셈과 변화작업 두가지를 하고있다.
             sum += number;
         }
         return sum;
