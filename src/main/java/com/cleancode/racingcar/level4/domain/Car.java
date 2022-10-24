@@ -10,77 +10,65 @@ import java.util.Random;
 public class Car {
     private static final int MAX_BOUND = 10;
     private static final int FORWARD_NUM = 4;
-    private final String name;
-    private int position = 0;
 
-//    public Car(String name, int position) {
-//        this.name = name;
-//        this.position = position;
-//    }
-
-//    public Car(String name) {
-//        if(StringUtils.isBlank(name)){
-//            throw new IllegalArgumentException("자동차 이름은 값이 존재해야 한다");
-//        }
-//        this.name = name.trim();
-//    }
-
-    //인자수가 많은 생성자에서 초기화및 유효성체크를 해야함.
-    public Car(String name, int position) {
-        StringUtils.checkBlank(name, "자동차 이름은 값이 존재해야 한다");
-        this.name = name;
-        this.position = position;
-    }
+    private final Name name;
+    private Position position;
 
     //인자수가 적은 생성자에서는 this( )호출만 한다.
     public Car(String name) {
         this(name, 0);
     }
 
-    public int getPosition() {
+    //인자수가 많은 생성자에서 초기화및 유효성체크를 해야함.
+    public Car(String name, int position) {
+        StringUtils.checkBlank(name, "자동차 이름은 값이 존재해야 한다");
+        this.name = new Name(name);
+        this.position = new Position(position);
+    }
+
+
+
+    public Position getPosition() {
         return position;
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 
+    public void move(MovingStrategy movingStrategy){
+        if(movingStrategy.movable())
+            position = position.move();
+    }
+    public void move(int randomNo){
+        if(randomNo >= FORWARD_NUM)
+            position = position.move();
+    }
     public void move(){
         int randomNo = getRandomNo();
         if(randomNo >= FORWARD_NUM)
-            this.position++;
+            position = position.move();
     }
 
-    private static int getRandomNo() {
+    protected int getRandomNo() {
         Random random = new Random();
         return random.nextInt(MAX_BOUND);
     }
 
-    boolean isWinner(int maxPosition) {
-        return this.position == maxPosition;
+    boolean isWinner(Position maxPosition) {
+        return position.equals(maxPosition);
     }
-    int fartherPosition(int maxPosition) {
-        if(maxPosition < this.position){
-            return this.position;
-        }
-        return maxPosition;
+    Position fartherPosition(Position maxPosition) {
+        return position.fartherPosition(maxPosition);
     }
 
-
-    @Override
-    public String toString() {
-        return "Car{" +
-                "name='" + name + '\'' +
-                ", position=" + position +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return position == car.position && Objects.equals(name, car.name);
+        return Objects.equals(name, car.name) && Objects.equals(position, car.position);
     }
 
     @Override
@@ -88,6 +76,11 @@ public class Car {
         return Objects.hash(name, position);
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Car{" +
+                "name=" + name +
+                ", position=" + position +
+                '}';
+    }
 }

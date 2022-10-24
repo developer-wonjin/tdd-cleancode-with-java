@@ -13,7 +13,7 @@ public class Winners {
         return findWinners(cars, maxPostion(cars));
     }
 
-    private static List<Car> findWinners(List<Car> cars, int maxPosition) {
+    private static List<Car> findWinners(List<Car> cars, Position maxPosition) {
         List<Car> winners = new ArrayList<>();
         //추후 리펙토링이 숙달되면 스트림을 이용해서 코드를 더 줄여보자
         for (Car car : cars) {  
@@ -24,8 +24,8 @@ public class Winners {
         return winners;
     }
 
-    private static int maxPostion(List<Car> cars) {
-        int maxPosition = 0;
+    private static Position maxPostion(List<Car> cars) {
+        Position maxPosition = new Position();
         for (Car car : cars) {
             maxPosition = car.fartherPosition(maxPosition);//도메인 로직이 객체안으로 숨어지는 효과~~!!
         }

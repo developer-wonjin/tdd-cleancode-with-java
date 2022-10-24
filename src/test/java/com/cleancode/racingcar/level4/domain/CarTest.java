@@ -8,13 +8,13 @@ class CarTest {
     @Test
     void 더_먼_이동거리_구하기() {
         Car car = new Car("pobi", 3);
-        assertThat(car.fartherPosition(2)).isEqualTo(3);
-        assertThat(car.fartherPosition(5)).isEqualTo(5);
+        assertThat(car.fartherPosition(new Position(2))).isEqualTo(new Position(3));
+        assertThat(car.fartherPosition(new Position(5))).isEqualTo(new Position(5));
     }
 
     @Test
     void 최대이동거리_유무() {
-        int maxPosition = 3;
+        Position maxPosition = new Position(3);
 
         assertThat(new Car("pobi", 3).isWinner(maxPosition)).isTrue();
         assertThat(new Car("pobi", 2).isWinner(maxPosition)).isFalse();
@@ -23,15 +23,15 @@ class CarTest {
     @Test
     void 이동() {
         Car car = new Car("pobi");
-        car.move();
-        assertThat(car.getPosition()).isEqualTo(1);
+        car.move(() -> true);
+        assertThat(car).isEqualTo(new Car("pobi", 1));
     }
 
     @Test
     void 정지() {
         Car car = new Car("pobi");
-        car.move();
-        assertThat(car.getPosition()).isEqualTo(0);
+        car.move(() -> false);
+        assertThat(car).isEqualTo(new Car("pobi", 0));
     }
 
 }
